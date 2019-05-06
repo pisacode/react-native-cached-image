@@ -60,12 +60,6 @@ class CachedImage extends React.Component {
         getImageCacheManager: PropTypes.func,
     };
 
-    static getDerivedStateFromProps(nextProps, prevState) {
-        if (!_.isEqual(this.props.source, nextProps.source)) {
-            this.processSource(nextProps.source);
-        }
-    }
-
     constructor(props) {
         super(props);
         this._isMounted = false;
@@ -95,6 +89,12 @@ class CachedImage extends React.Component {
             });
 
         this.processSource(this.props.source);
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (!_.isEqual(this.props.source, prevProps.source)) {
+            this.processSource(this.props.source);
+        }
     }
 
     componentWillUnmount() {
