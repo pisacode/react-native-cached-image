@@ -60,6 +60,12 @@ class CachedImage extends React.Component {
         getImageCacheManager: PropTypes.func,
     };
 
+    static getDerivedStateFromProps(nextProps, prevState) {
+        if (!_.isEqual(this.props.source, nextProps.source)) {
+            this.processSource(nextProps.source);
+        }
+    }
+
     constructor(props) {
         super(props);
         this._isMounted = false;
@@ -77,7 +83,7 @@ class CachedImage extends React.Component {
         this.renderLoader = this.renderLoader.bind(this);
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this._isMounted = true;
         NetInfo.isConnected.addEventListener('connectionChange', this.handleConnectivityChange);
         // initial
@@ -94,12 +100,6 @@ class CachedImage extends React.Component {
     componentWillUnmount() {
         this._isMounted = false;
         NetInfo.isConnected.removeEventListener('connectionChange', this.handleConnectivityChange);
-    }
-
-    componentWillReceiveProps(nextProps) {
-        if (!_.isEqual(this.props.source, nextProps.source)) {
-            this.processSource(nextProps.source);
-        }
     }
 
     setNativeProps(nativeProps) {
