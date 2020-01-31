@@ -52,6 +52,7 @@
     "prop-types": "15.5.10",
     "react-native-clcasher": "1.0.0",
     "rn-fetch-blob": "0.10.15",
+    "@react-native-community/netinfo": "^5.3.3",
     "url-parse": "^1.4.7"
   },
   "devDependencies": {
